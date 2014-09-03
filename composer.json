@@ -1,6 +1,10 @@
 {
     "name":         "tadcka/tree",
+    "homepage":     "https://github.com/tadcka/Tree",
+    "description":  "Tadcka tree component",
+    "keywords":     ["tree"],
     "type":         "library",
+    "license":      "MIT",
     "authors": [
         {
             "name":   "Tadas Gliaubicas",
@@ -13,7 +17,7 @@
     },
     "autoload": {
         "psr-4": {
-            "Tadcka\\Tree\\": ""
+            "Tadcka\\Component\\Tree\\": ""
         }
     }
 }
