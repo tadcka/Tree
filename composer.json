@@ -1,0 +1,19 @@
+{
+    "name":         "tadcka/tree",
+    "type":         "library",
+    "authors": [
+        {
+            "name":   "Tadas Gliaubicas",
+            "email":  "tadcka89@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {
+        "php": ">=5.3.3"
+    },
+    "autoload": {
+        "psr-4": {
+            "Tadcka\\Tree\\": ""
+        }
+    }
+}
