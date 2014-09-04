@@ -38,7 +38,7 @@ class TreeRegistry implements TreeRegistryInterface
      */
     public function add(TreeConfig $config)
     {
-        $this->configs[$config->getName()] = $config;
+        $this->configs[$config->getSlug()] = $config;
     }
 
     /**
@@ -48,6 +48,6 @@ class TreeRegistry implements TreeRegistryInterface
      */
     public function getConfigs()
     {
-        return $this->configs;
+        return array_values($this->configs);
     }
 }

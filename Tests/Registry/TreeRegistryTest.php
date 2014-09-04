@@ -11,6 +11,7 @@
 
 namespace Tadcka\Component\Tree\Tests\Registry;
 
+use Tadcka\Component\Tree\Registry\Tree\TreeConfig;
 use Tadcka\Component\Tree\Registry\Tree\TreeRegistry;
 
 /**
@@ -36,5 +37,27 @@ class TreeRegistryTest extends \PHPUnit_Framework_TestCase
     public function testEmpty()
     {
         $this->assertEmpty($this->treeRegistry->getConfigs());
+    }
+
+    public function testAddConfig()
+    {
+        $this->treeRegistry->add(new TreeConfig('Test', 'test'));
+
+        $configs = $this->treeRegistry->getConfigs();
+
+        $this->assertCount(1, $configs);
+        $this->assertEquals('test', $configs[0]->getSlug());
+    }
+
+    public function testAddConfigDuplicate()
+    {
+        $config = new TreeConfig('Test', 'test');
+        $this->treeRegistry->add($config);
+        $this->treeRegistry->add($config);
+
+        $configs = $this->treeRegistry->getConfigs();
+
+        $this->assertCount(1, $configs);
+        $this->assertEquals('test', $configs[0]->getSlug());
     }
 }

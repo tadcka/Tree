@@ -12,30 +12,31 @@
 namespace Tadcka\Component\Tree\ModelManager;
 
 use Tadcka\Bundle\TreeBundle\Model\NodeInterface;
+use Tadcka\Component\Tree\Model\TreeInterface;
 
 /**
  * @author Tadas Gliaubicas <tadcka89@gmail.com>
  */
 interface NodeManagerInterface
 {
-
     /**
      * Find many nodes by type.
      *
      * @param string $type
+     * @param TreeInterface $tree
      *
      * @return array|NodeInterface[]
      */
-    public function findManyNodesByType($type);
+    public function findManyNodesByTypeAndTree($type, TreeInterface $tree);
 
     /**
-     * Find many nodes by types.
+     * Find existing node types.
      *
-     * @param array $types
+     * @param TreeInterface $tree
      *
-     * @return array|NodeInterface[]
+     * @return array
      */
-    public function findManyNodesByTypes(array $types);
+    public function findExistingNodeTypes(TreeInterface $tree);
 
     /**
      * Create new node object.

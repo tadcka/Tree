@@ -38,7 +38,7 @@ class NodeTypeRegistry implements NodeTypeRegistryInterface
      */
     public function add(NodeTypeConfig $config)
     {
-        $this->configs[$config->getSlug()] = $config;
+        $this->configs[$config->getType()] = $config;
     }
 
     /**
@@ -48,6 +48,6 @@ class NodeTypeRegistry implements NodeTypeRegistryInterface
      */
     public function getConfigs()
     {
-        return $this->configs;
+        return array_values($this->configs);
     }
 }

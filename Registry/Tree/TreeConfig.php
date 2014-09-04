@@ -26,6 +26,11 @@ class TreeConfig
     private $name;
 
     /**
+     * @var string
+     */
+    private $slug;
+
+    /**
      * @var null|string
      */
     private $iconPath;
@@ -34,11 +39,13 @@ class TreeConfig
      * Constructor.
      *
      * @param string $name
+     * @param string $slug
      * @param null|string $iconPath
      */
-    public function __construct($name, $iconPath = null)
+    public function __construct($name, $slug, $iconPath = null)
     {
         $this->name = $name;
+        $this->slug = $slug;
         $this->iconPath = $iconPath;
     }
 
@@ -50,6 +57,16 @@ class TreeConfig
     public function getName()
     {
         return $this->name;
+    }
+
+    /**
+     * Get slug.
+     *
+     * @return string
+     */
+    public function getSlug()
+    {
+        return $this->slug;
     }
 
     /**

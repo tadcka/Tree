@@ -26,7 +26,7 @@ class NodeTypeConfig
     /**
      * @var string
      */
-    private $slug;
+    private $type;
 
     /**
      * @var string
@@ -47,18 +47,18 @@ class NodeTypeConfig
      * Constructor.
      *
      * @param string $name
-     * @param string $slug
-     * @param string $iconPath
+     * @param string $type
      * @param array $parentTypes
      * @param bool $isOnlyOne
+     * @param null|string $iconPath
      */
-    public function __construct($name, $slug, $iconPath, array $parentTypes = array(), $isOnlyOne = false)
+    public function __construct($name, $type, array $parentTypes = array(), $isOnlyOne = false, $iconPath = null)
     {
         $this->name = $name;
-        $this->slug = $slug;
+        $this->type = $type;
         $this->parentTypes = $parentTypes;
-        $this->iconPath = $iconPath;
         $this->isOnlyOne = $isOnlyOne;
+        $this->iconPath = $iconPath;
     }
 
     /**
@@ -72,13 +72,13 @@ class NodeTypeConfig
     }
 
     /**
-     * Get slug.
+     * Get type.
      *
      * @return string
      */
-    public function getSlug()
+    public function getType()
     {
-        return $this->slug;
+        return $this->type;
     }
 
     /**

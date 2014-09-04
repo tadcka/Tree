@@ -11,6 +11,7 @@
 
 namespace Tadcka\Component\Tree\Tests\Registry;
 
+use Tadcka\Component\Tree\Registry\NodeType\NodeTypeConfig;
 use Tadcka\Component\Tree\Registry\NodeType\NodeTypeRegistry;
 
 /**
@@ -36,5 +37,27 @@ class NodeTypeRegistryTest extends \PHPUnit_Framework_TestCase
     public function testEmpty()
     {
         $this->assertEmpty($this->nodeTypeRegistry->getConfigs());
+    }
+
+    public function testAddConfig()
+    {
+        $this->nodeTypeRegistry->add(new NodeTypeConfig('Test', 'test'));
+
+        $configs = $this->nodeTypeRegistry->getConfigs();
+
+        $this->assertCount(1, $configs);
+        $this->assertEquals('test', $configs[0]->getType());
+    }
+
+    public function testAddConfigDuplicate()
+    {
+        $config = new NodeTypeConfig('Test', 'test');
+        $this->nodeTypeRegistry->add($config);
+        $this->nodeTypeRegistry->add($config);
+
+        $configs = $this->nodeTypeRegistry->getConfigs();
+
+        $this->assertCount(1, $configs);
+        $this->assertEquals('test', $configs[0]->getType());
     }
 }
