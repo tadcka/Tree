@@ -11,8 +11,8 @@
 
 namespace Tadcka\Component\Tree\Validator;
 
+use Tadcka\Component\Tree\Exception\NodeTypeRuntimeException;
 use Tadcka\Component\Tree\Model\NodeInterface;
-use Tadcka\Component\Tree\ModelManager\NodeManagerInterface;
 use Tadcka\Component\Tree\Registry\NodeType\NodeTypeConfig;
 use Tadcka\Component\Tree\Registry\NodeType\NodeTypeRegistry;
 
@@ -24,24 +24,64 @@ use Tadcka\Component\Tree\Registry\NodeType\NodeTypeRegistry;
 class NodeValidator
 {
     /**
-     * @var NodeManagerInterface
-     */
-    private $nodeManager;
-
-    /**
      * @var NodeTypeRegistry
      */
     private $nodeTypeRegistry;
 
-    public function __construct(NodeManagerInterface $nodeManager, NodeTypeRegistry $nodeTypeRegistry)
+    /**
+     * Constructor.
+     *
+     * @param NodeTypeRegistry $nodeTypeRegistry
+     */
+    public function __construct(NodeTypeRegistry $nodeTypeRegistry)
     {
-        $this->nodeManager = $nodeManager;
         $this->nodeTypeRegistry = $nodeTypeRegistry;
     }
 
-    public function isValidNodeType($nodeType, NodeInterface $node)
+    /**
+     * Validate current node type.
+     *
+     * @param string $currentNodeType
+     * @param array $nodeTypes
+     * @param NodeInterface $node
+     *
+     * @return bool
+     */
+    public function validateCurrentNodeType($currentNodeType, array $nodeTypes, NodeInterface $node)
     {
-        $nodeTypeConfig = $this->getNodeTypeConfig($node->getType());
+        $config = $this->getNodeTypeConfig($currentNodeType);
+        if ((null !== $config) && (!$config->isOnlyOne() || !in_array($currentNodeType, $nodeTypes)) && $this->isNodeType($node)) {
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
+     * Check if is node type.
+     *
+     * @param NodeInterface $node
+     *
+     * @return bool
+     *
+     * @throws NodeTypeRuntimeException
+     */
+    public function isNodeType(NodeInterface $node)
+    {
+        if (null === $node->getParent()) {
+            throw new NodeTypeRuntimeException('Node parent can\'t be empty!');
+        }
+
+        $config = $this->getNodeTypeConfig($node->getType());
+        if (null === $config) {
+            return false;
+        }
+
+        if (0 === count($config->getParentTypes())) {
+            return true;
+        }
+
+        return in_array($node->getParent()->getType(), $config->getParentTypes());
     }
 
     /**

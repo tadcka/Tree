@@ -16,13 +16,13 @@ namespace Tadcka\Component\Tree\DependencyInjection;
  *
  * @since 9/5/14 12:40 AM
  */
-class AddNodeTypeConfigPass extends AbstractConfigPass
+class RegisterTreeConfigPass extends AbstractConfigPass
 {
     /**
-     *{@inheritdoc}
+     * {@inheritdoc}
      */
     protected function methodCall()
     {
-        return 'add';
+        return 'register';
     }
 }

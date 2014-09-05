@@ -9,20 +9,13 @@
  * file that was distributed with this source code.
  */
 
-namespace Tadcka\Component\Tree\DependencyInjection;
+namespace Tadcka\Component\Tree\Exception;
 
 /**
  * @author Tadas Gliaubicas <tadcka89@gmail.com>
  *
- * @since 9/5/14 12:40 AM
+ * @since 9/5/14 10:39 PM
  */
-class AddNodeTypeConfigPass extends AbstractConfigPass
+class NodeTypeRuntimeException extends \RuntimeException
 {
-    /**
-     *{@inheritdoc}
-     */
-    protected function methodCall()
-    {
-        return 'add';
-    }
 }

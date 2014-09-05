@@ -11,55 +11,18 @@
 
 namespace Tadcka\Component\Tree\DependencyInjection;
 
-use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
-use Symfony\Component\DependencyInjection\ContainerBuilder;
-use Symfony\Component\DependencyInjection\Reference;
-
 /**
  * @author Tadas Gliaubicas <tadcka89@gmail.com>
  *
  * @since 9/5/14 12:40 AM
  */
-class AddTreeConfigPass implements CompilerPassInterface
+class AddTreeConfigPass extends AbstractConfigPass
 {
-    /**
-     * @var string
-     */
-    private $serviceId;
-
-    /**
-     * @var string
-     */
-    private $tagName;
-
-    /**
-     * Constructor.
-     *
-     * @param string $serviceId
-     * @param string $tagName
-     */
-    public function __construct($serviceId, $tagName)
-    {
-        $this->serviceId = $serviceId;
-        $this->tagName = $tagName;
-    }
-
     /**
      * {@inheritdoc}
      */
-    public function process(ContainerBuilder $container)
+    protected function methodCall()
     {
-        if (false === $container->hasDefinition($this->serviceId)) {
-            return;
-        }
-
-        $definition = $container->getDefinition($this->serviceId);
-
-        $calls = $definition->getMethodCalls();
-        $definition->setMethodCalls(array());
-        foreach ($container->findTaggedServiceIds($this->tagName) as $id => $attributes) {
-            $definition->addMethodCall('register', array(new Reference($id)));
-        }
-        $definition->setMethodCalls(array_merge($definition->getMethodCalls(), $calls));
+        return 'add';
     }
 }

@@ -11,15 +11,69 @@
 
 namespace Tadcka\Component\Tree\Tests\Provider;
 
+use Tadcka\Component\Tree\Model\Node;
+use Tadcka\Component\Tree\Model\Tree;
+use Tadcka\Component\Tree\Model\Manager\NodeManagerInterface;
+use Tadcka\Component\Tree\Provider\NodeProvider;
+use Tadcka\Component\Tree\Registry\NodeType\NodeTypeConfig;
+use Tadcka\Component\Tree\Registry\NodeType\NodeTypeRegistry;
+use Tadcka\Component\Tree\Tests\AbstractNodeValidatorTest;
+use Tadcka\Component\Tree\Validator\NodeValidator;
+
 /**
  * @author Tadas Gliaubicas <tadcka89@gmail.com>
  *
  * @since 9/5/14 2:06 AM
  */
-class NodeProviderTest extends \PHPUnit_Framework_TestCase
+class NodeProviderTest extends AbstractNodeValidatorTest
 {
+    /**
+     * @var NodeManagerInterface
+     */
+    private $nodeManager;
+
+    /**
+     * @var NodeProvider
+     */
+    private $nodeProvider;
+
+    /**
+     * {@inheritdoc}
+     */
+    protected function setUp()
+    {
+        parent::setUp();
+
+        $this->nodeManager = $this->getMock('Tadcka\\Component\\Tree\\Model\\Manager\\NodeManagerInterface');
+        $this->nodeManager
+            ->expects($this->any())
+            ->method('findExistingNodeTypes')
+            ->will($this->returnValue(array('test', 'mock', 'fake')));
+
+        $this->nodeProvider = new NodeProvider($this->nodeManager, $this->nodeTypeRegistry, $this->nodeValidator);
+    }
+
+    /**
+     * @expectedException \Tadcka\Component\Tree\Exception\NodeTypeRuntimeException
+     */
+    public function testGetActiveNodeTypesWithEmptyNodeType()
+    {
+        $node = new Node();
+        $node->setTree(new Tree());
+
+        $this->assertEmpty($this->nodeProvider->getActiveNodeTypes($node));
+    }
+
     public function testGetActiveNodeTypes()
     {
+        $node = new Node();
+        $node->setTree(new Tree());
+        $node->setParent(new Node());
+        $node->setType('type');
 
+        $this->assertCount(0, $this->nodeProvider->getActiveNodeTypes($node));
+
+        $node->setType('test');
+        $this->assertCount(1, $this->nodeProvider->getActiveNodeTypes($node));
     }
 }

@@ -11,9 +11,11 @@
 
 namespace Tadcka\Component\Tree\Provider;
 
+use Tadcka\Component\Tree\Registry\NodeType\NodeTypeConfig;
+use Tadcka\Component\Tree\Exception\NodeTypeRuntimeException;
 use Tadcka\Component\Tree\Model\NodeInterface;
-use Tadcka\Component\Tree\Model\TreeInterface;
-use Tadcka\Component\Tree\ModelManager\NodeManagerInterface;
+use Tadcka\Component\Tree\Model\Manager\NodeManagerInterface;
+use Tadcka\Component\Tree\Registry\NodeType\NodeTypeRegistry;
 use Tadcka\Component\Tree\Validator\NodeValidator;
 
 /**
@@ -29,6 +31,11 @@ class NodeProvider implements NodeProviderInterface
     private $nodeManager;
 
     /**
+     * @var NodeTypeRegistry
+     */
+    private $nodeTypeRegistry;
+
+    /**
      * @var NodeValidator
      */
     private $nodeValidator;
@@ -37,26 +44,57 @@ class NodeProvider implements NodeProviderInterface
      * Constructor.
      *
      * @param NodeManagerInterface $nodeManager
+     * @param NodeTypeRegistry $nodeTypeRegistry
      * @param NodeValidator $nodeValidator
      */
-    public function __construct(NodeManagerInterface $nodeManager, NodeValidator $nodeValidator)
-    {
+    public function __construct(
+        NodeManagerInterface $nodeManager,
+        NodeTypeRegistry $nodeTypeRegistry,
+        NodeValidator $nodeValidator
+    ) {
         $this->nodeManager = $nodeManager;
+        $this->nodeTypeRegistry = $nodeTypeRegistry;
         $this->nodeValidator = $nodeValidator;
     }
 
     /**
      * {@inheritdoc}
      */
-    public function getActiveNodeTypes(NodeInterface $node, TreeInterface $tree)
+    public function getActiveNodeTypes(NodeInterface $node)
     {
-        $nodeTypes = array();
-        foreach ($this->nodeManager->findExistingNodeTypes($tree) as $nodeType) {
-            if ($this->nodeValidator->isValidNodeType($nodeType, $node)) {
-                $nodeTypes[] = $nodeType;
+        if (!$node->getType()) {
+            throw new NodeTypeRuntimeException('Node type can\'t be empty!');
+        }
+
+        $nodeTypes = $this->nodeManager->findExistingNodeTypes($node->getTree());
+
+        $data = array();
+        foreach ($nodeTypes as $nodeType) {
+            if (($node->getType() === $nodeType) ||
+                $this->nodeValidator->validateCurrentNodeType($nodeType, $nodeTypes, $node)
+            ) {
+                $data[] = $nodeType;
             }
         }
 
-        return $nodeTypes;
+        return $data;
+    }
+
+    /**
+     * Get node type config.
+     *
+     * @param string $nodeType
+     *
+     * @return null|NodeTypeConfig
+     */
+    public function getNodeTypeConfig($nodeType)
+    {
+        foreach ($this->nodeTypeRegistry->getConfigs() as $nodeTypeConfig) {
+            if ($nodeType === $nodeTypeConfig->getType()) {
+                return $nodeTypeConfig;
+            }
+        }
+
+        return null;
     }
 }

@@ -12,7 +12,7 @@
 namespace Tadcka\Component\Tree\Provider;
 
 use Tadcka\Component\Tree\Model\NodeInterface;
-use Tadcka\Component\Tree\Model\TreeInterface;
+use Tadcka\Component\Tree\Registry\NodeType\NodeTypeConfig;
 
 /**
  * @author Tadas Gliaubicas <tadcka89@gmail.com>
@@ -25,9 +25,17 @@ interface NodeProviderInterface
      * Get active node types.
      *
      * @param NodeInterface $node
-     * @param TreeInterface $tree
      *
      * @return array
      */
-    public function getActiveNodeTypes(NodeInterface $node, TreeInterface $tree);
+    public function getActiveNodeTypes(NodeInterface $node);
+
+    /**
+     * Get node type config.
+     *
+     * @param string $nodeType
+     *
+     * @return null|NodeTypeConfig
+     */
+    public function getNodeTypeConfig($nodeType);
 }

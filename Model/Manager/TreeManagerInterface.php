@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Tadcka\Component\Tree\ModelManager;
+namespace Tadcka\Component\Tree\Model\Manager;
 
 use Tadcka\Component\Tree\Model\TreeInterface;
 

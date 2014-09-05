@@ -9,9 +9,9 @@
  * file that was distributed with this source code.
  */
 
-namespace Tadcka\Component\Tree\ModelManager;
+namespace Tadcka\Component\Tree\Model\Manager;
 
-use Tadcka\Bundle\TreeBundle\Model\NodeTranslationInterface;
+use Tadcka\Component\Tree\Model\NodeTranslationInterface;
 
 /**
  * @author Tadas Gliaubicas <tadcka89@gmail.com>

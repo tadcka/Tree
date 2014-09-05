@@ -13,6 +13,8 @@ namespace Tadcka\Component\Tree\Validator\Constraints;
 
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
+use Tadcka\Component\Tree\Model\NodeInterface;
+use Tadcka\Component\Tree\Provider\NodeProviderInterface;
 
 /**
  * @author Tadas Gliaubicas <tadcka89@gmail.com>
@@ -22,18 +24,18 @@ use Symfony\Component\Validator\ConstraintValidator;
 class NodeTypeValidator extends ConstraintValidator
 {
     /**
-     * @var NodeTypeValidator
+     * @var NodeProviderInterface
      */
-    private $nodeTypeManager;
+    private $nodeProvider;
 
     /**
      * Constructor.
      *
-     * @param NodeTypeValidator $nodeTypeManager
+     * @param NodeProviderInterface $nodeProvider
      */
-    public function __construct(NodeTypeValidator $nodeTypeManager)
+    public function __construct(NodeProviderInterface $nodeProvider)
     {
-        $this->nodeTypeManager = $nodeTypeManager;
+        $this->nodeProvider = $nodeProvider;
     }
 
     /**
@@ -44,9 +46,9 @@ class NodeTypeValidator extends ConstraintValidator
      */
     public function validate($node, Constraint $constraint)
     {
-        if ($node->getType() && (false === $this->nodeTypeManager->isValid($node))) {
+        if (!in_array($node->getType(), $this->nodeProvider->getActiveNodeTypes($node))) {
             $nodeTypeName = $node->getType();
-            if (null !== $config = $this->nodeTypeManager->getConfig($node->getType())) {
+            if (null !== $config = $this->nodeProvider->getNodeTypeConfig($node->getType())) {
                 $nodeTypeName = $config->getName();
             }
             $this->context->addViolation($constraint->message, array('%node_type%' => $nodeTypeName));
