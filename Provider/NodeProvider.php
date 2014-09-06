@@ -11,6 +11,7 @@
 
 namespace Tadcka\Component\Tree\Provider;
 
+use Tadcka\Component\Tree\Model\TreeInterface;
 use Tadcka\Component\Tree\Registry\NodeType\NodeTypeConfig;
 use Tadcka\Component\Tree\Exception\NodeTypeRuntimeException;
 use Tadcka\Component\Tree\Model\NodeInterface;
@@ -81,11 +82,7 @@ class NodeProvider implements NodeProviderInterface
     }
 
     /**
-     * Get node type config.
-     *
-     * @param string $nodeType
-     *
-     * @return null|NodeTypeConfig
+     * {@inheritdoc}
      */
     public function getNodeTypeConfig($nodeType)
     {
@@ -96,5 +93,13 @@ class NodeProvider implements NodeProviderInterface
         }
 
         return null;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getRootNode(TreeInterface $tree)
+    {
+        return $this->nodeManager->findRootNode($tree);
     }
 }

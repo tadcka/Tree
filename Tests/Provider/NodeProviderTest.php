@@ -15,10 +15,7 @@ use Tadcka\Component\Tree\Model\Node;
 use Tadcka\Component\Tree\Model\Tree;
 use Tadcka\Component\Tree\Model\Manager\NodeManagerInterface;
 use Tadcka\Component\Tree\Provider\NodeProvider;
-use Tadcka\Component\Tree\Registry\NodeType\NodeTypeConfig;
-use Tadcka\Component\Tree\Registry\NodeType\NodeTypeRegistry;
 use Tadcka\Component\Tree\Tests\AbstractNodeValidatorTest;
-use Tadcka\Component\Tree\Validator\NodeValidator;
 
 /**
  * @author Tadas Gliaubicas <tadcka89@gmail.com>
@@ -50,6 +47,11 @@ class NodeProviderTest extends AbstractNodeValidatorTest
             ->method('findExistingNodeTypes')
             ->will($this->returnValue(array('test', 'mock', 'fake')));
 
+        $this->nodeManager
+            ->expects($this->any())
+            ->method('findRootNode')
+            ->will($this->returnValue(new Node()));
+
         $this->nodeProvider = new NodeProvider($this->nodeManager, $this->nodeTypeRegistry, $this->nodeValidator);
     }
 
@@ -75,5 +77,17 @@ class NodeProviderTest extends AbstractNodeValidatorTest
 
         $node->setType('test');
         $this->assertCount(1, $this->nodeProvider->getActiveNodeTypes($node));
+    }
+
+    public function testGetNodeTypeConfig()
+    {
+        $this->assertNotEmpty($this->nodeProvider->getNodeTypeConfig('test'));
+        $this->assertNotEmpty($this->nodeProvider->getNodeTypeConfig('mock'));
+        $this->assertEmpty($this->nodeProvider->getNodeTypeConfig('fake'));
+    }
+
+    public function testGetRootNode()
+    {
+        $this->assertNotEmpty($this->nodeProvider->getRootNode(new Tree()));
     }
 }

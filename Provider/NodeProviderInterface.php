@@ -12,6 +12,7 @@
 namespace Tadcka\Component\Tree\Provider;
 
 use Tadcka\Component\Tree\Model\NodeInterface;
+use Tadcka\Component\Tree\Model\TreeInterface;
 use Tadcka\Component\Tree\Registry\NodeType\NodeTypeConfig;
 
 /**
@@ -38,4 +39,13 @@ interface NodeProviderInterface
      * @return null|NodeTypeConfig
      */
     public function getNodeTypeConfig($nodeType);
+
+    /**
+     * Get root node.
+     *
+     * @param TreeInterface $tree
+     *
+     * @return null|NodeInterface
+     */
+    public function getRootNode(TreeInterface $tree);
 }

@@ -20,14 +20,13 @@ use Tadcka\Component\Tree\Model\TreeInterface;
 interface NodeManagerInterface
 {
     /**
-     * Find many nodes by type.
+     * Find root node.
      *
-     * @param string $type
      * @param TreeInterface $tree
      *
-     * @return array|NodeInterface[]
+     * @return null|NodeInterface
      */
-    public function findManyNodesByTypeAndTree($type, TreeInterface $tree);
+    public function findRootNode(TreeInterface $tree);
 
     /**
      * Find existing node types.
