@@ -12,8 +12,6 @@
 namespace Tadcka\Component\Tree\Provider;
 
 use Tadcka\Component\Tree\Model\TreeInterface;
-use Tadcka\Component\Tree\Registry\NodeType\NodeTypeConfig;
-use Tadcka\Component\Tree\Exception\NodeTypeRuntimeException;
 use Tadcka\Component\Tree\Model\NodeInterface;
 use Tadcka\Component\Tree\Model\Manager\NodeManagerInterface;
 use Tadcka\Component\Tree\Registry\NodeType\NodeTypeRegistry;
@@ -63,10 +61,6 @@ class NodeProvider implements NodeProviderInterface
      */
     public function getActiveNodeTypes(NodeInterface $node)
     {
-        if (!$node->getType()) {
-            throw new NodeTypeRuntimeException('Node type can\'t be empty!');
-        }
-
         $nodeTypes = $this->nodeManager->findExistingNodeTypes($node->getTree());
 
         $data = array();
