@@ -11,6 +11,7 @@
 
 namespace Tadcka\Component\Tree\Model\Manager;
 
+use Tadcka\Component\Tree\Model\NodeInterface;
 use Tadcka\Component\Tree\Model\NodeTranslationInterface;
 
 /**
@@ -20,6 +21,25 @@ use Tadcka\Component\Tree\Model\NodeTranslationInterface;
  */
 interface NodeTranslationManagerInterface
 {
+    /**
+     * Find node translation by node and language.
+     *
+     * @param NodeInterface $node
+     * @param string $lang
+     *
+     * @return null|NodeTranslationInterface
+     */
+    public function findTranslationByNodeAndLang(NodeInterface $node, $lang);
+
+    /**
+     * Find many node translations by node.
+     *
+     * @param NodeInterface $node
+     *
+     * @return array|NodeTranslationInterface[]
+     */
+    public function findManyTranslationsByNode(NodeInterface $node);
+
     /**
      * Create new node translation.
      *

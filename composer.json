@@ -18,6 +18,10 @@
     "require-dev": {
         "phpunit/phpunit": "~4.2"
     },
+    "suggest": {
+        "symfony/dependency-injection": "For dependency injection.",
+        "symfony/event-dispatcher": "For event."
+    },
     "autoload": {
         "psr-4": {
             "Tadcka\\Component\\Tree\\": ""

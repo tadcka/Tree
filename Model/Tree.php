@@ -32,12 +32,18 @@ class Tree implements TreeInterface
     protected $updatedAt;
 
     /**
+     * @var array|NodeInterface[]
+     */
+    protected $nodes;
+
+    /**
      * Constructor.
      */
     public function __construct()
     {
         $this->createdAt = new \DateTime();
         $this->updatedAt = $this->createdAt;
+        $this->nodes = array();
     }
 
     /**
@@ -46,6 +52,8 @@ class Tree implements TreeInterface
     public function setSlug($slug)
     {
         $this->slug = $slug;
+
+        return $this;
     }
 
     /**
@@ -70,6 +78,8 @@ class Tree implements TreeInterface
     public function setUpdatedAt(\DateTime $updatedAt)
     {
         $this->updatedAt = $updatedAt;
+
+        return $this;
     }
 
     /**
@@ -78,5 +88,39 @@ class Tree implements TreeInterface
     public function getUpdatedAt()
     {
         return $this->updatedAt;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function setNodes($nodes)
+    {
+        $this->nodes = $nodes;
+
+        return $this;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getNodes()
+    {
+        return $this->nodes;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function addNode(NodeInterface $node)
+    {
+        $this->nodes[] = $node;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function removeNode(NodeInterface $node)
+    {
+        // TODO: Implement removeNode() method.
     }
 }

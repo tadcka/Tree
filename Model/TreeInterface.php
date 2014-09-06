@@ -54,4 +54,34 @@ interface TreeInterface
      * @return \Datetime
      */
     public function getUpdatedAt();
+
+    /**
+     * Set nodes.
+     *
+     * @param array|NodeInterface[] $nodes
+     *
+     * @return TreeInterface
+     */
+    public function setNodes($nodes);
+
+    /**
+     * Get nodes.
+     *
+     * @return array|NodeInterface[]
+     */
+    public function getNodes();
+
+    /**
+     * Add node.
+     *
+     * @param NodeInterface $node
+     */
+    public function addNode(NodeInterface $node);
+
+    /**
+     * Remove node.
+     *
+     * @param NodeInterface $node
+     */
+    public function removeNode(NodeInterface $node);
 }
