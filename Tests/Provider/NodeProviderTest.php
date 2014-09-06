@@ -25,11 +25,6 @@ use Tadcka\Component\Tree\Tests\AbstractNodeValidatorTest;
 class NodeProviderTest extends AbstractNodeValidatorTest
 {
     /**
-     * @var NodeManagerInterface
-     */
-    private $nodeManager;
-
-    /**
      * @var NodeProvider
      */
     private $nodeProvider;
@@ -41,12 +36,6 @@ class NodeProviderTest extends AbstractNodeValidatorTest
     {
         parent::setUp();
 
-        $this->nodeManager = $this->getMock('Tadcka\\Component\\Tree\\Model\\Manager\\NodeManagerInterface');
-        $this->nodeManager
-            ->expects($this->any())
-            ->method('findExistingNodeTypes')
-            ->will($this->returnValue(array('test', 'mock', 'fake')));
-
         $this->nodeManager
             ->expects($this->any())
             ->method('findRootNode')
@@ -55,15 +44,12 @@ class NodeProviderTest extends AbstractNodeValidatorTest
         $this->nodeProvider = new NodeProvider($this->nodeManager, $this->nodeTypeRegistry, $this->nodeValidator);
     }
 
-    /**
-     * @expectedException \Tadcka\Component\Tree\Exception\NodeTypeRuntimeException
-     */
     public function testGetActiveNodeTypesWithEmptyNodeType()
     {
         $node = new Node();
         $node->setTree(new Tree());
 
-        $this->assertEmpty($this->nodeProvider->getActiveNodeTypes($node));
+        $this->assertCount(1, $this->nodeProvider->getActiveNodeTypes($node));
     }
 
     public function testGetActiveNodeTypes()
@@ -73,7 +59,7 @@ class NodeProviderTest extends AbstractNodeValidatorTest
         $node->setParent(new Node());
         $node->setType('type');
 
-        $this->assertCount(0, $this->nodeProvider->getActiveNodeTypes($node));
+        $this->assertCount(1, $this->nodeProvider->getActiveNodeTypes($node));
 
         $node->setType('test');
         $this->assertCount(1, $this->nodeProvider->getActiveNodeTypes($node));

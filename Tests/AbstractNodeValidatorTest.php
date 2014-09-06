@@ -11,6 +11,7 @@
 
 namespace Tadcka\Component\Tree\Tests;
 
+use Tadcka\Component\Tree\Model\Manager\NodeManagerInterface;
 use Tadcka\Component\Tree\Registry\NodeType\NodeTypeConfig;
 use Tadcka\Component\Tree\Registry\NodeType\NodeTypeRegistry;
 use Tadcka\Component\Tree\Validator\NodeValidator;
@@ -22,6 +23,11 @@ use Tadcka\Component\Tree\Validator\NodeValidator;
  */
 abstract class AbstractNodeValidatorTest extends \PHPUnit_Framework_TestCase
 {
+    /**
+     * @var NodeManagerInterface
+     */
+    protected $nodeManager;
+
     /**
      * @var NodeTypeRegistry
      */
@@ -37,6 +43,12 @@ abstract class AbstractNodeValidatorTest extends \PHPUnit_Framework_TestCase
      */
     protected function setUp()
     {
+        $this->nodeManager = $this->getMock('Tadcka\\Component\\Tree\\Model\\Manager\\NodeManagerInterface');
+        $this->nodeManager
+            ->expects($this->any())
+            ->method('findExistingNodeTypes')
+            ->will($this->returnValue(array('test', 'mock', 'fake')));
+
         $this->nodeTypeRegistry = $this->getMock('Tadcka\\Component\\Tree\\Registry\\NodeType\\NodeTypeRegistry');
         $this->nodeTypeRegistry
             ->expects($this->any())
@@ -50,6 +62,6 @@ abstract class AbstractNodeValidatorTest extends \PHPUnit_Framework_TestCase
                 )
             );
 
-        $this->nodeValidator = new NodeValidator($this->nodeTypeRegistry);
+        $this->nodeValidator = new NodeValidator($this->nodeManager, $this->nodeTypeRegistry);
     }
 }

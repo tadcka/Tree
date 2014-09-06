@@ -12,7 +12,9 @@
 namespace Tadcka\Component\Tree\Validator;
 
 use Tadcka\Component\Tree\Exception\NodeTypeRuntimeException;
+use Tadcka\Component\Tree\Model\Manager\NodeManagerInterface;
 use Tadcka\Component\Tree\Model\NodeInterface;
+use Tadcka\Component\Tree\Model\TreeInterface;
 use Tadcka\Component\Tree\Registry\NodeType\NodeTypeConfig;
 use Tadcka\Component\Tree\Registry\NodeType\NodeTypeRegistry;
 
@@ -24,6 +26,11 @@ use Tadcka\Component\Tree\Registry\NodeType\NodeTypeRegistry;
 class NodeValidator
 {
     /**
+     * @var NodeManagerInterface
+     */
+    private $nodeManager;
+
+    /**
      * @var NodeTypeRegistry
      */
     private $nodeTypeRegistry;
@@ -31,57 +38,65 @@ class NodeValidator
     /**
      * Constructor.
      *
+     * @param NodeManagerInterface $nodeManager
      * @param NodeTypeRegistry $nodeTypeRegistry
      */
-    public function __construct(NodeTypeRegistry $nodeTypeRegistry)
+    public function __construct(NodeManagerInterface $nodeManager, NodeTypeRegistry $nodeTypeRegistry)
     {
+        $this->nodeManager = $nodeManager;
         $this->nodeTypeRegistry = $nodeTypeRegistry;
     }
 
     /**
-     * Validate current node type.
+     * Validate by only one.
      *
-     * @param string $currentNodeType
-     * @param array $nodeTypes
-     * @param NodeInterface $node
+     * @param string $nodeType
+     * @param TreeInterface $tree
      *
      * @return bool
      */
-    public function validateCurrentNodeType($currentNodeType, array $nodeTypes, NodeInterface $node)
+    public function validateByOnlyOne($nodeType, TreeInterface $tree)
     {
-        $config = $this->getNodeTypeConfig($currentNodeType);
-        if ((null !== $config) && (!$config->isOnlyOne() || !in_array($currentNodeType, $nodeTypes)) && $this->isNodeType($node)) {
+        if (!$nodeType) {
             return true;
         }
 
-        return false;
-    }
-
-    /**
-     * Check if is node type.
-     *
-     * @param NodeInterface $node
-     *
-     * @return bool
-     *
-     * @throws NodeTypeRuntimeException
-     */
-    public function isNodeType(NodeInterface $node)
-    {
-        if (null === $node->getParent()) {
-            throw new NodeTypeRuntimeException('Node parent can\'t be empty!');
-        }
-
-        $config = $this->getNodeTypeConfig($node->getType());
+        $config = $this->getNodeTypeConfig($nodeType);
         if (null === $config) {
             return false;
         }
 
-        if (0 === count($config->getParentTypes())) {
+        if ($config->isOnlyOne()) {
+            return !in_array($nodeType, $this->nodeManager->findExistingNodeTypes($tree));
+        }
+
+        return true;
+    }
+
+    /**
+     * Validate by parent.
+     *
+     * @param string $nodeType
+     * @param NodeInterface $parent
+     *
+     * @return bool
+     */
+    public function validateByParent($nodeType, NodeInterface $parent = null)
+    {
+        if (!$nodeType) {
             return true;
         }
 
-        return in_array($node->getParent()->getType(), $config->getParentTypes());
+        $config = $this->getNodeTypeConfig($nodeType);
+        if (null === $config) {
+            return false;
+        }
+
+        if ((null !== $parent) && $parent->getType()) {
+            return in_array($parent->getType(), $config->getParentTypes());
+        }
+
+        return true;
     }
 
     /**

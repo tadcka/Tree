@@ -61,18 +61,17 @@ class NodeProvider implements NodeProviderInterface
      */
     public function getActiveNodeTypes(NodeInterface $node)
     {
-        $nodeTypes = $this->nodeManager->findExistingNodeTypes($node->getTree());
-
-        $data = array();
-        foreach ($nodeTypes as $nodeType) {
-            if (($node->getType() === $nodeType) ||
-                $this->nodeValidator->validateCurrentNodeType($nodeType, $nodeTypes, $node)
+        $nodeTypes = array();
+        foreach ($this->nodeTypeRegistry->getConfigs() as $config) {
+            if (($node->getType() === $config->getType()) ||
+                ($this->nodeValidator->validateByOnlyOne($config->getType(), $node->getTree()) &&
+                    $this->nodeValidator->validateByParent($config->getType(), $node->getParent()))
             ) {
-                $data[] = $nodeType;
+                $nodeTypes[$config->getType()] = $config->getType();
             }
         }
 
-        return $data;
+        return $nodeTypes;
     }
 
     /**

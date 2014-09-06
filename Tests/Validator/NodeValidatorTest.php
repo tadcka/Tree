@@ -12,6 +12,7 @@
 namespace Tadcka\Component\Tree\Tests\Validator;
 
 use Tadcka\Component\Tree\Model\Node;
+use Tadcka\Component\Tree\Model\Tree;
 use Tadcka\Component\Tree\Tests\AbstractNodeValidatorTest;
 
 /**
@@ -21,39 +22,29 @@ use Tadcka\Component\Tree\Tests\AbstractNodeValidatorTest;
  */
 class NodeValidatorTest extends AbstractNodeValidatorTest
 {
-    public function testValidateNodeType()
+    public function testValidateByOnlyOne()
     {
-        $node = new Node();
-        $node->setParent(new Node());
-        $node->setType('test');
+        $tree = new Tree();
 
-        $this->assertTrue($this->nodeValidator->validateCurrentNodeType('test', array(), $node));
-        $this->assertFalse($this->nodeValidator->validateCurrentNodeType('mock', array('mock'), $node));
-        $this->assertFalse($this->nodeValidator->validateCurrentNodeType('fake', array('fake'), $node));
+        $this->assertTrue($this->nodeValidator->validateByOnlyOne('', $tree));
+        $this->assertFalse($this->nodeValidator->validateByOnlyOne('fake', $tree));
+        $this->assertTrue($this->nodeValidator->validateByOnlyOne('test', $tree));
+        $this->assertFalse($this->nodeValidator->validateByOnlyOne('mock', $tree));
     }
 
-    /**
-     * @expectedException \Tadcka\Component\Tree\Exception\NodeTypeRuntimeException
-     */
-    public function testHasNodeTypeWithoutParent()
+    public function testValidateByParent()
     {
-        $this->nodeValidator->isNodeType(new Node());
-    }
+        $this->assertTrue($this->nodeValidator->validateByParent(''));
+        $this->assertFalse($this->nodeValidator->validateByParent('fake'));
+        $this->assertTrue($this->nodeValidator->validateByParent('test'));
 
-    public function testHasNodeType()
-    {
-        $node = new Node();
-        $node->setParent(new Node());
+        $parent = new Node();
+        $this->assertTrue($this->nodeValidator->validateByParent('test', $parent));
 
-        $this->assertFalse($this->nodeValidator->isNodeType($node));
+        $parent->setType('test');
+        $this->assertTrue($this->nodeValidator->validateByParent('mock', $parent));
 
-        $node->setType('test');
-        $this->assertTrue($this->nodeValidator->isNodeType($node));
-
-        $node->setType('mock');
-        $this->assertFalse($this->nodeValidator->isNodeType($node));
-
-        $node->getParent()->setType('test');
-        $this->assertTrue($this->nodeValidator->isNodeType($node));
+        $parent->setType('mock');
+        $this->assertFalse($this->nodeValidator->validateByParent('mock', $parent));
     }
 }
