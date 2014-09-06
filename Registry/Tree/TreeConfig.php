@@ -36,6 +36,11 @@ class TreeConfig
     private $iconPath;
 
     /**
+     * @var string
+     */
+    private $translationDomain;
+
+    /**
      * Constructor.
      *
      * @param string $name
@@ -77,5 +82,29 @@ class TreeConfig
     public function getIconPath()
     {
         return $this->iconPath;
+    }
+
+    /**
+     * Set translation domain.
+     *
+     * @param string $translationDomain
+     *
+     * @return TreeConfig
+     */
+    public function setTranslationDomain($translationDomain)
+    {
+        $this->translationDomain = $translationDomain;
+
+        return $this;
+    }
+
+    /**
+     * Get translation domain.
+     *
+     * @return string
+     */
+    public function getTranslationDomain()
+    {
+        return $this->translationDomain;
     }
 }

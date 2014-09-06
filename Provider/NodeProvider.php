@@ -71,7 +71,7 @@ class NodeProvider implements NodeProviderInterface
             }
         }
 
-        return $nodeTypes;
+        return array_values($nodeTypes);
     }
 
     /**
