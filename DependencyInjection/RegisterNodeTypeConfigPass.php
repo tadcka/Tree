@@ -16,7 +16,7 @@ namespace Tadcka\Component\Tree\DependencyInjection;
  *
  * @since 9/5/14 12:40 AM
  */
-class RegisterNotTypeConfigPass extends AbstractConfigPass
+class RegisterNodeTypeConfigPass extends AbstractConfigPass
 {
     /**
      *{@inheritdoc}
