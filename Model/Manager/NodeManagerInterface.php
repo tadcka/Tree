@@ -38,6 +38,16 @@ interface NodeManagerInterface
     public function findExistingNodeTypes(TreeInterface $tree);
 
     /**
+     * Find many nodes by type.
+     *
+     * @param string $type
+     * @param TreeInterface $tree
+     *
+     * @return array|NodeInterface[]
+     */
+    public function findManyNodesByType($type, TreeInterface $tree);
+
+    /**
      * Create new node object.
      *
      * @return NodeInterface
