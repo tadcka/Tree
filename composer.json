@@ -26,5 +26,10 @@
         "psr-4": {
             "Tadcka\\Component\\Tree\\": ""
         }
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "0.1.x-dev"
+        }
     }
 }
