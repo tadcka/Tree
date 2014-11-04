@@ -36,10 +36,10 @@ class NodeValidatorTest extends AbstractNodeValidatorTest
     {
         $this->assertTrue($this->nodeValidator->validateByParent(''));
         $this->assertFalse($this->nodeValidator->validateByParent('fake'));
-        $this->assertTrue($this->nodeValidator->validateByParent('test'));
+        $this->assertFalse($this->nodeValidator->validateByParent('test'));
 
         $parent = new Node();
-        $this->assertTrue($this->nodeValidator->validateByParent('test', $parent));
+        $this->assertFalse($this->nodeValidator->validateByParent('test', $parent));
 
         $parent->setType('test');
         $this->assertTrue($this->nodeValidator->validateByParent('mock', $parent));

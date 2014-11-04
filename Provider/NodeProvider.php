@@ -65,7 +65,8 @@ class NodeProvider implements NodeProviderInterface
         foreach ($this->nodeTypeRegistry->getConfigs() as $config) {
             if (($node->getType() === $config->getType()) ||
                 ($this->nodeValidator->validateByOnlyOne($config->getType(), $node->getTree()) &&
-                    $this->nodeValidator->validateByParent($config->getType(), $node->getParent()))
+                    (!$config->getParentTypes() ||
+                        $this->nodeValidator->validateByParent($config->getType(), $node->getParent())))
             ) {
                 $nodeTypes[$config->getType()] = $config->getType();
             }

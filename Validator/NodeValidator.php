@@ -96,7 +96,7 @@ class NodeValidator
             return in_array($parent->getType(), $config->getParentTypes());
         }
 
-        return true;
+        return false;
     }
 
     /**
