@@ -11,6 +11,8 @@
 
 namespace Tadcka\Component\Tree\Model;
 
+use Tadcka\Component\Routing\Model\RouteInterface;
+
 /**
  * @author Tadas Gliaubicas <tadcka89@gmail.com>
  */
@@ -35,6 +37,16 @@ class NodeTranslation implements NodeTranslationInterface
      * @var string
      */
     protected $description;
+
+    /**
+     * @var bool
+     */
+    protected $online = false;
+
+    /**
+     * @var RouteInterface
+     */
+    protected $route;
 
     /**
      * {@inheritdoc}
@@ -106,5 +118,41 @@ class NodeTranslation implements NodeTranslationInterface
     public function getDescription()
     {
         return $this->description;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function setOnline($online)
+    {
+        $this->online = $online;
+
+        return $this;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function isOnline()
+    {
+        return $this->online;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function setRoute(RouteInterface $route)
+    {
+        $this->route = $route;
+
+        return $this;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getRoute()
+    {
+        return $this->route;
     }
 }

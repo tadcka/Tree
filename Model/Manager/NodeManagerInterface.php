@@ -20,6 +20,15 @@ use Tadcka\Component\Tree\Model\TreeInterface;
 interface NodeManagerInterface
 {
     /**
+     * Find node by id.
+     *
+     * @param int $id
+     *
+     * @return null|NodeInterface
+     */
+    public function findNodeById($id);
+
+    /**
      * Find root node.
      *
      * @param TreeInterface $tree

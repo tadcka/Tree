@@ -11,11 +11,18 @@
 
 namespace Tadcka\Component\Tree\Model;
 
+use Silvestra\Component\Seo\Model\SeoMetadataInterface;
+
 /**
  * @author Tadas Gliaubicas <tadcka89@gmail.com>
  */
 class Node implements NodeInterface
 {
+    /**
+     * @var int
+     */
+    protected $id;
+
     /**
      * @var string
      */
@@ -27,6 +34,26 @@ class Node implements NodeInterface
     protected $priority;
 
     /**
+     * @var int
+     */
+    protected $root;
+
+    /**
+     * @var int
+     */
+    protected $left;
+
+    /**
+     * @var int
+     */
+    protected $level;
+
+    /**
+     * @var int
+     */
+    protected $right;
+
+    /**
      * @var NodeInterface
      */
     protected $parent;
@@ -35,6 +62,11 @@ class Node implements NodeInterface
      * @var array|NodeInterface[]
      */
     protected $children;
+
+    /**
+     * @var array|SeoMetadataInterface[]
+     */
+    protected $seoMetadata;
 
     /**
      * @var array|NodeTranslationInterface[]
@@ -52,8 +84,17 @@ class Node implements NodeInterface
     public function __construct()
     {
         $this->children = array();
+        $this->seoMetadata = array();
         $this->translations = array();
         $this->priority = 0;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getId()
+    {
+        return $this->id;
     }
 
     /**
@@ -90,6 +131,78 @@ class Node implements NodeInterface
     public function getPriority()
     {
         return $this->priority;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function setRoot($root)
+    {
+        $this->root = $root;
+
+        return $this;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getRoot()
+    {
+        return $this->root;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function setLeft($left)
+    {
+        $this->left = $left;
+
+        return $this;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getLeft()
+    {
+        return $this->left;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function setLevel($level)
+    {
+        $this->left = $level;
+
+        return $this;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getLevel()
+    {
+        return $this->level;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function setRight($right)
+    {
+        $this->right = $right;
+
+        return $this;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getRight()
+    {
+        return $this->right;
     }
 
     /**
@@ -142,6 +255,54 @@ class Node implements NodeInterface
     public function removeChild(NodeInterface $child)
     {
         // TODO: Implement removeChild() method.
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function setSeoMetadata($seoMetadata)
+    {
+        $this->seoMetadata = $seoMetadata;
+
+        return $this;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getSeoMetadata()
+    {
+        return $this->seoMetadata;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function addSeoMetadata(SeoMetadataInterface $seoMetadata)
+    {
+        $this->seoMetadata[] = $seoMetadata;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function removeSeoMetadata(SeoMetadataInterface $seoMetadata)
+    {
+        // TODO
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getSeoMetadataByLang($lang)
+    {
+        foreach ($this->seoMetadata as $seoMetadata) {
+            if ($lang === $seoMetadata->getLang()) {
+                return $seoMetadata;
+            }
+        }
+
+        return null;
     }
 
     /**

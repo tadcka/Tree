@@ -11,11 +11,15 @@
 
 namespace Tadcka\Component\Tree\Model;
 
+use Tadcka\Component\Routing\Model\RouteInterface;
+
 /**
  * @author Tadas Gliaubicas <tadcka89@gmail.com>
  */
 interface NodeTranslationInterface
 {
+    const OBJECT_TYPE = 'tadcka_sitemap_node_translation';
+
     /**
      * Set treeItem.
      *
@@ -79,4 +83,36 @@ interface NodeTranslationInterface
      * @return string
      */
     public function getDescription();
+
+    /**
+     * Set online.
+     *
+     * @param bool $online
+     *
+     * @return NodeTranslationInterface
+     */
+    public function setOnline($online);
+
+    /**
+     * Is online.
+     *
+     * @return bool
+     */
+    public function isOnline();
+
+    /**
+     * Set route.
+     *
+     * @param RouteInterface $route
+     *
+     * @return NodeTranslationInterface
+     */
+    public function setRoute(RouteInterface $route);
+
+    /**
+     * Get route.
+     *
+     * @return RouteInterface
+     */
+    public function getRoute();
 }

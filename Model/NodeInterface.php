@@ -11,11 +11,20 @@
 
 namespace Tadcka\Component\Tree\Model;
 
+use Silvestra\Component\Seo\Model\SeoMetadataInterface;
+
 /**
  * @author Tadas Gliaubicas <tadcka89@gmail.com>
  */
 interface NodeInterface
 {
+    /**
+     * Get id.
+     *
+     * @return int
+     */
+    public function getId();
+
     /**
      * Set type.
      *
@@ -47,6 +56,70 @@ interface NodeInterface
      * @return int
      */
     public function getPriority();
+
+    /**
+     * Set root.
+     *
+     * @param int $root
+     *
+     * @return NodeInterface
+     */
+    public function setRoot($root);
+
+    /**
+     * Get root.
+     *
+     * @return int
+     */
+    public function getRoot();
+
+    /**
+     * Set left.
+     *
+     * @param int $left
+     *
+     * @return NodeInterface
+     */
+    public function setLeft($left);
+
+    /**
+     * Get left.
+     *
+     * @return int
+     */
+    public function getLeft();
+
+    /**
+     * Set level.
+     *
+     * @param int $level
+     *
+     * @return NodeInterface
+     */
+    public function setLevel($level);
+
+    /**
+     * Get level.
+     *
+     * @return int
+     */
+    public function getLevel();
+
+    /**
+     * Set right.
+     *
+     * @param int $right
+     *
+     * @return NodeInterface
+     */
+    public function setRight($right);
+
+    /**
+     * Get right.
+     *
+     * @return int
+     */
+    public function getRight();
 
     /**
      * Set parent.
@@ -93,6 +166,45 @@ interface NodeInterface
      * @param NodeInterface $child
      */
     public function removeChild(NodeInterface $child);
+
+    /**
+     * Set list of seo metadata.
+     *
+     * @param array|SeoMetadataInterface[] $seoMetadata
+     *
+     * @return NodeInterface
+     */
+    public function setSeoMetadata($seoMetadata);
+
+    /**
+     * Get list of seo metadata.
+     *
+     * @return array|SeoMetadataInterface[]
+     */
+    public function getSeoMetadata();
+
+    /**
+     * Add seo metadata.
+     *
+     * @param SeoMetadataInterface $seoMetadata
+     */
+    public function addSeoMetadata(SeoMetadataInterface $seoMetadata);
+
+    /**
+     * Remove seo metadata.
+     *
+     * @param SeoMetadataInterface $seoMetadata
+     */
+    public function removeSeoMetadata(SeoMetadataInterface $seoMetadata);
+
+    /**
+     * Get seo metadata by language.
+     *
+     * @param string $lang
+     *
+     * @return null|SeoMetadataInterface
+     */
+    public function getSeoMetadataByLang($lang);
 
     /**
      * Set translations.
