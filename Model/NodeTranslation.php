@@ -39,11 +39,6 @@ class NodeTranslation implements NodeTranslationInterface
     protected $description;
 
     /**
-     * @var bool
-     */
-    protected $online = false;
-
-    /**
      * @var RouteInterface
      */
     protected $route;
@@ -118,24 +113,6 @@ class NodeTranslation implements NodeTranslationInterface
     public function getDescription()
     {
         return $this->description;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function setOnline($online)
-    {
-        $this->online = $online;
-
-        return $this;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function isOnline()
-    {
-        return $this->online;
     }
 
     /**
