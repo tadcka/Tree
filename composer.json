@@ -14,6 +14,7 @@
     "require": {
         "php": ">=5.3.3",
 
+        "silvestra/form": "0.1.*@dev",
         "silvestra/seo": "0.1.*@dev",
         "tadcka/routing": "0.2.*@dev"
     },
