@@ -27,13 +27,30 @@ class TreeNodeEvent extends Event
     private $node;
 
     /**
+     * @var string
+     */
+    private $locale;
+
+    /**
      * Constructor.
      *
+     * @param string $locale
      * @param NodeInterface $node
      */
-    public function __construct(NodeInterface $node)
+    public function __construct($locale, NodeInterface $node)
     {
+        $this->locale = $locale;
         $this->node = $node;
+    }
+
+    /**
+     * Get locale.
+     *
+     * @return string
+     */
+    public function getLocale()
+    {
+        return $this->locale;
     }
 
     /**
