@@ -29,6 +29,15 @@ interface NodeManagerInterface
     public function findNodeById($id);
 
     /**
+     * Find node parents.
+     *
+     * @param NodeInterface $node
+     *
+     * @return array|NodeInterface[]
+     */
+    public function findNodeParents(NodeInterface $node);
+
+    /**
      * Find root node.
      *
      * @param TreeInterface $tree
