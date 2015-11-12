@@ -11,6 +11,7 @@
 
 namespace Tadcka\Component\Tree\Model;
 
+use Silvestra\Component\Seo\Model\SeoMetadataInterface;
 use Tadcka\Component\Routing\Model\RouteInterface;
 
 /**
@@ -99,4 +100,20 @@ interface NodeTranslationInterface
      * @return RouteInterface
      */
     public function getRoute();
+
+    /**
+     * Set seo metadata.
+     *
+     * @param SeoMetadataInterface $seoMetadata
+     *
+     * @return NodeInterface
+     */
+    public function setSeoMetadata(SeoMetadataInterface $seoMetadata);
+
+    /**
+     * Get seo metadata.
+     *
+     * @return SeoMetadataInterface
+     */
+    public function getSeoMetadata();
 }

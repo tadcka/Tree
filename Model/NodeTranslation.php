@@ -11,6 +11,7 @@
 
 namespace Tadcka\Component\Tree\Model;
 
+use Silvestra\Component\Seo\Model\SeoMetadataInterface;
 use Tadcka\Component\Routing\Model\RouteInterface;
 
 /**
@@ -42,6 +43,11 @@ class NodeTranslation implements NodeTranslationInterface
      * @var RouteInterface
      */
     protected $route;
+
+    /**
+     * @var SeoMetadataInterface
+     */
+    protected $seoMetadata;
 
     /**
      * {@inheritdoc}
@@ -131,5 +137,23 @@ class NodeTranslation implements NodeTranslationInterface
     public function getRoute()
     {
         return $this->route;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function setSeoMetadata(SeoMetadataInterface $seoMetadata)
+    {
+        $this->seoMetadata = $seoMetadata;
+
+        return $this;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getSeoMetadata()
+    {
+        return $this->seoMetadata;
     }
 }

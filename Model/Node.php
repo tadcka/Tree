@@ -11,8 +11,6 @@
 
 namespace Tadcka\Component\Tree\Model;
 
-use Silvestra\Component\Seo\Model\SeoMetadataInterface;
-
 /**
  * @author Tadas Gliaubicas <tadcka89@gmail.com>
  */
@@ -62,11 +60,6 @@ class Node implements NodeInterface
      * @var array|NodeInterface[]
      */
     protected $children;
-
-    /**
-     * @var array|SeoMetadataInterface[]
-     */
-    protected $seoMetadata;
 
     /**
      * @var array|NodeTranslationInterface[]
@@ -255,54 +248,6 @@ class Node implements NodeInterface
     public function removeChild(NodeInterface $child)
     {
         // TODO: Implement removeChild() method.
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function setSeoMetadata($seoMetadata)
-    {
-        $this->seoMetadata = $seoMetadata;
-
-        return $this;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getSeoMetadata()
-    {
-        return $this->seoMetadata;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function addSeoMetadata(SeoMetadataInterface $seoMetadata)
-    {
-        $this->seoMetadata[] = $seoMetadata;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function removeSeoMetadata(SeoMetadataInterface $seoMetadata)
-    {
-        // TODO
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getSeoMetadataByLang($lang)
-    {
-        foreach ($this->seoMetadata as $seoMetadata) {
-            if ($lang === $seoMetadata->getLang()) {
-                return $seoMetadata;
-            }
-        }
-
-        return null;
     }
 
     /**
