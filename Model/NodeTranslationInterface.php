@@ -116,4 +116,20 @@ interface NodeTranslationInterface
      * @return SeoMetadataInterface
      */
     public function getSeoMetadata();
+
+    /**
+     * Get link attributes.
+     *
+     * @return array
+     */
+    public function getLinkAttributes();
+
+    /**
+     * Set link attributes.
+     *
+     * @param array $linkAttributes
+     *
+     * @return NodeTranslationInterface
+     */
+    public function setLinkAttributes(array $linkAttributes);
 }
