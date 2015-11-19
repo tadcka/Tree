@@ -50,6 +50,19 @@ class NodeTranslation implements NodeTranslationInterface
     protected $seoMetadata;
 
     /**
+     * @var array
+     */
+    protected $linkAttributes;
+
+    /**
+     * Constructor.
+     */
+    public function __construct()
+    {
+        $this->linkAttributes = array();
+    }
+
+    /**
      * {@inheritdoc}
      */
     public function setNode(NodeInterface $node)
@@ -155,5 +168,23 @@ class NodeTranslation implements NodeTranslationInterface
     public function getSeoMetadata()
     {
         return $this->seoMetadata;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getLinkAttributes()
+    {
+        return $this->linkAttributes;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function setLinkAttributes(array $linkAttributes)
+    {
+        $this->linkAttributes = $linkAttributes;
+
+        return $this;
     }
 }
