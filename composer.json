@@ -14,8 +14,7 @@
     "require": {
         "php": ">=5.4",
 
-        "silvestra/seo": "dev-master",
-        "tadcka/routing": "0.3.*@dev"
+        "tadcka/routing": "dev-master"
     },
     "require-dev": {
         "phpunit/phpunit": "~4.2",
